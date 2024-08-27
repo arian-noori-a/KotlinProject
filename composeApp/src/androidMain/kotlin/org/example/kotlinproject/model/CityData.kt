@@ -13,4 +13,6 @@ object CityData {
         "Tehran"
     )
 
+    var selectedCity : String = ""
+
 }

@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -7,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.sqlDelight) // Ensure this plugin is applied
 }
 
 kotlin {
@@ -29,9 +29,12 @@ kotlin {
                 implementation(libs.androidx.lifecycle.viewmodel)
                 implementation(libs.androidx.lifecycle.runtime.compose)
                 // Shared dependencies
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-                implementation("com.squareup.retrofit2:retrofit:2.9.0") // Retrofit shared
-                implementation("com.squareup.retrofit2:converter-gson:2.9.0") // Retrofit Gson converter
+                implementation(libs.kotlin.stdlib.common)
+                implementation(libs.retrofit)
+                implementation(libs.converter.gson)
+                // SQLDelight
+                implementation(libs.sqlDelight)
+                implementation(libs.sqldelightCoroutines)
             }
         }
 
@@ -39,42 +42,40 @@ kotlin {
             dependencies {
                 implementation(compose.preview)
                 implementation(libs.androidx.activity.compose)
-                implementation("androidx.core:core-ktx:1.10.1")
-                implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-                implementation("androidx.activity:activity-compose:1.7.1")
-                implementation("androidx.compose.ui:ui:1.4.3")
-                implementation("androidx.compose.material:material:1.4.3")
-                implementation("androidx.compose.ui:ui-tooling-preview:1.4.3")
-                implementation("io.coil-kt:coil-compose:2.2.2") // Coil for image loading on Android
-                implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
-                implementation("androidx.navigation:navigation-compose:2.7.0")
-
-                // Add RecyclerView dependency
-                implementation("androidx.recyclerview:recyclerview:1.3.1")
+                implementation(libs.androidx.core.ktx.v1101)
+                implementation(libs.androidx.lifecycle.runtime.ktx)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.androidx.ui)
+                implementation(libs.material)
+                implementation(libs.androidx.ui.tooling.preview)
+                implementation(libs.coil.compose)
+                implementation(libs.androidx.lifecycle.viewmodel.compose)
+                implementation(libs.androidx.navigation.compose)
+                implementation(libs.androidx.recyclerview)
+                // SQLDelight
+                implementation(libs.sqldelightAndroidDriver)
             }
         }
 
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                // Add any common test dependencies here
             }
         }
 
-        // Renamed source sets for Android testing
         val androidUnitTest by getting {
             dependencies {
-                implementation("androidx.test.ext:junit:1.1.5")
-                implementation("androidx.test.espresso:espresso-core:3.5.1")
-                implementation("androidx.compose.ui:ui-test-junit4:1.4.3")
+                implementation(libs.androidx.junit.v115)
+                implementation(libs.androidx.espresso.core)
+                implementation(libs.androidx.ui.test.junit4)
             }
         }
 
         val androidInstrumentedTest by getting {
             dependencies {
-                implementation("androidx.test.ext:junit:1.1.5")
-                implementation("androidx.test.espresso:espresso-core:3.5.1")
-                implementation("androidx.compose.ui:ui-test-junit4:1.4.3")
+                implementation(libs.androidx.junit.v115)
+                implementation(libs.androidx.espresso.core)
+                implementation(libs.androidx.ui.test.junit4)
             }
         }
     }
@@ -114,5 +115,12 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+    }
+}
+
+// SQLDelight configuration
+sqldelight {
+    database("MyDatabase") {
+        packageName = "com.example.mydatabase"
     }
 }

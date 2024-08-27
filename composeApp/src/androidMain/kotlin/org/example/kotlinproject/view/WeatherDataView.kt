@@ -2,6 +2,7 @@ package org.example.kotlinproject.view
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -14,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.model.WeatherResponse
 import org.example.kotlinproject.ui.theme.LocalColoring
 import org.example.kotlinproject.ui.theme.LocalSpacing
@@ -87,8 +89,13 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
         ) {
             Text(
                 text = weatherInfo,
-                color = LocalColoring.current.NightMode.textColor
+                color = LocalColoring.current.NightMode.textColor,
+                modifier = Modifier.clickable(onClick = {
+                    CityData.selectedCity = weather.name
+                    navController.navigate("WeatherMenu")
+                })
             )
+
         }
     }
 }

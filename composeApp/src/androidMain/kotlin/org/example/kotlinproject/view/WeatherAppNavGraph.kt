@@ -19,6 +19,7 @@ fun WeatherAppNavGraph(apikey: String) {
 
         composable("MainMenu") { WeatherScreen(navController, apikey) }
         composable("SettingMenu") { SettingScreen(navController) }
+        composable("WeatherMenu") { SelectedWeatherMenu(navController) }
 
     }
 }

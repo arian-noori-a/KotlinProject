@@ -70,7 +70,7 @@ fun WeatherScreen(navController: NavController, apikey: String) {
                     label = { Text(text = "Home" , fontWeight = FontWeight.Bold) },
                     selected = true,
                     onClick = {
-                        navController.navigate("home")
+                        navController.navigate("MainMenu")
                     }
                 )
                 BottomNavigationItem(

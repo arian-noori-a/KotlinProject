@@ -10,12 +10,78 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import org.example.kotlinproject.ui.theme.LocalSpacing
 
 @Composable
-fun SettingScreen(navController: NavController) {
+fun TemperatureTabBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
+    val tabs = listOf("Celsius", "Fahrenheit", "Kelvin")
 
+    TabRow(selectedTabIndex = selectedTab) {
+        tabs.forEachIndexed { index, title ->
+            Tab(
+                text = { Text(text = title,
+                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
+                selected = index == selectedTab,
+                onClick = { onTabSelected(index) }
+            )
+        }
+    }
+}
+@Composable
+fun WindSpeedBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
+    val tabs = listOf("km/h", "m/h", "Knots")
+
+    TabRow(selectedTabIndex = selectedTab) {
+        tabs.forEachIndexed { index, title ->
+            Tab(
+                text = { Text(text = title,
+                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
+                selected = index == selectedTab,
+                onClick = { onTabSelected(index) }
+            )
+        }
+    }
+}
+@Composable
+fun PressureBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
+    val tabs = listOf("hPa", "Inches", "kPa" , "mmHg")
+
+    TabRow(selectedTabIndex = selectedTab) {
+        tabs.forEachIndexed { index, title ->
+            Tab(
+                text = { Text(text = title,
+                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
+                selected = index == selectedTab,
+                onClick = { onTabSelected(index) }
+            )
+        }
+    }
+}
+@Composable
+fun ModeBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
+    val tabs = listOf("Light Mode", "Night Mode")
+
+    TabRow(selectedTabIndex = selectedTab) {
+        tabs.forEachIndexed { index, title ->
+            Tab(
+                text = { Text(text = title,
+                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
+                selected = index == selectedTab,
+                onClick = { onTabSelected(index) }
+            )
+        }
+    }
+}
+
+
+@Composable
+fun SettingScreen(navController: NavController) {
+    var selectedTemperature by remember { mutableIntStateOf(0) }
+    var selectedWindSpeed by remember { mutableIntStateOf(0) }
+    var selectedPressure by remember { mutableIntStateOf(0) }
+    var selectedMode by remember { mutableIntStateOf(0) }
     Scaffold(
         bottomBar = {
             BottomNavigation {
@@ -28,11 +94,11 @@ fun SettingScreen(navController: NavController) {
                     }
                 )
                 BottomNavigationItem(
-                    icon = { Icon(Icons.Filled.Settings, contentDescription = "Setting") },
-                    label = { Text(text = "Settings" , fontWeight = FontWeight.Bold) },
+                    icon = { Icon(Icons.Filled.Settings, contentDescription = "Settings") },
+                    label = { Text(text = "Settings", fontWeight = FontWeight.Bold) },
                     selected = true,
                     onClick = {
-                        navController.navigate("settings")
+                        navController.navigate("SettingMenu")
                     }
                 )
             }
@@ -50,6 +116,30 @@ fun SettingScreen(navController: NavController) {
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.h6
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+                ModeBar (
+                    selectedTab = selectedMode,
+                    onTabSelected = { index -> selectedMode = index }
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                TemperatureTabBar(
+                    selectedTab = selectedTemperature,
+                    onTabSelected = { index -> selectedTemperature = index }
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+                WindSpeedBar(
+                    selectedTab = selectedWindSpeed,
+                    onTabSelected = { index -> selectedWindSpeed = index }
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+                PressureBar(
+                    selectedTab = selectedPressure,
+                    onTabSelected = { index -> selectedPressure = index }
                 )
             }
         }
