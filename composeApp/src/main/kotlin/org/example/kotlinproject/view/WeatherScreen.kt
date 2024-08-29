@@ -23,8 +23,8 @@ import androidx.compose.foundation.layout.padding
 import kotlinx.coroutines.delay
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+//import androidx.lifecycle.viewmodel.compose.viewModel
+//import androidx.navigation.NavController
 import androidx.compose.runtime.collectAsState
 import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.ui.theme.LocalColoring
@@ -32,15 +32,15 @@ import org.example.kotlinproject.ui.theme.LocalSpacing
 import org.example.kotlinproject.viewmodel.WeatherViewModel
 
 @Composable
-fun WeatherScreen(navController: NavController, apikey: String) {
+fun WeatherScreen(/*navController: NavController,*/ apikey: String) {
 
     val cities = CityData.cities
-    val viewModel: WeatherViewModel = viewModel {
+    /*val viewModel: WeatherViewModel = viewModel {
         WeatherViewModel(apiKey = apikey)
-    }
+    }*/
 
-    val weatherList by viewModel.weatherList.collectAsState()
-    val error by viewModel.error.collectAsState()
+    //val weatherList by viewModel.weatherList.collectAsState()
+    //val error by viewModel.error.collectAsState()
     var cityName by remember {
         mutableStateOf("")
     }
@@ -50,18 +50,18 @@ fun WeatherScreen(navController: NavController, apikey: String) {
 
     LaunchedEffect(Unit) {
         for (city in cities) {
-            viewModel.fetchWeather(city)
+            //viewModel.fetchWeather(city)
         }
     }
 
-    LaunchedEffect(error) {
-        if (error != null) {
-            showError = true
-            delay(3000)
-            showError = false
-        }
-    }
-
+//    LaunchedEffect(error) {
+//        if (error != null) {
+//            showError = true
+//            delay(3000)
+//            showError = false
+//        }
+//    }
+/*
     Scaffold(
         bottomBar = {
             BottomNavigation {
@@ -153,4 +153,5 @@ fun WeatherScreen(navController: NavController, apikey: String) {
             }
         }
     }
+    */
 }

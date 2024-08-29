@@ -1,126 +1,59 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.sqlDelight) // Ensure this plugin is applied
-}
-
-kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
-                implementation(libs.androidx.lifecycle.viewmodel)
-                implementation(libs.androidx.lifecycle.runtime.compose)
-                // Shared dependencies
-                implementation(libs.kotlin.stdlib.common)
-                implementation(libs.retrofit)
-                implementation(libs.converter.gson)
-                // SQLDelight
-                implementation(libs.sqlDelight)
-                implementation(libs.sqldelightCoroutines)
-            }
-        }
-
-        val androidMain by getting {
-            dependencies {
-                implementation(compose.preview)
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.androidx.core.ktx.v1101)
-                implementation(libs.androidx.lifecycle.runtime.ktx)
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.androidx.ui)
-                implementation(libs.material)
-                implementation(libs.androidx.ui.tooling.preview)
-                implementation(libs.coil.compose)
-                implementation(libs.androidx.lifecycle.viewmodel.compose)
-                implementation(libs.androidx.navigation.compose)
-                implementation(libs.androidx.recyclerview)
-                // SQLDelight
-                implementation(libs.sqldelightAndroidDriver)
-            }
-        }
-
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(libs.androidx.junit.v115)
-                implementation(libs.androidx.espresso.core)
-                implementation(libs.androidx.ui.test.junit4)
-            }
-        }
-
-        val androidInstrumentedTest by getting {
-            dependencies {
-                implementation(libs.androidx.junit.v115)
-                implementation(libs.androidx.espresso.core)
-                implementation(libs.androidx.ui.test.junit4)
-            }
-        }
-    }
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "org.example.kotlinproject"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+    namespace = "com.example.kotlinproject"
+    compileSdk = 34
 
     defaultConfig {
-        applicationId = "org.example.kotlinproject"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        applicationId = "com.example.kotlinproject"
+        minSdk = 31
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
     }
-    dependencies {
-        debugImplementation(compose.uiTooling)
-    }
 }
 
-// SQLDelight configuration
-sqldelight {
-    database("MyDatabase") {
-        packageName = "com.example.mydatabase"
-    }
+dependencies {
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }

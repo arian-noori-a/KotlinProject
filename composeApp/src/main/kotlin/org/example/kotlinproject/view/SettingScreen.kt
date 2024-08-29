@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+//import androidx.navigation.NavController
 import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.ui.theme.LocalSpacing
 
@@ -19,64 +19,64 @@ import org.example.kotlinproject.ui.theme.LocalSpacing
 fun TemperatureTabBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     val tabs = listOf("Celsius", "Fahrenheit", "Kelvin")
 
-    TabRow(selectedTabIndex = selectedTab) {
-        tabs.forEachIndexed { index, title ->
-            Tab(
-                text = { Text(text = title,
-                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
-                selected = index == selectedTab,
-                onClick = { onTabSelected(index) }
-            )
-        }
-    }
+//    TabRow(selectedTabIndex = selectedTab) {
+//        tabs.forEachIndexed { index, title ->
+//            Tab(
+//                text = { Text(text = title,
+//                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
+//                selected = index == selectedTab,
+//                onClick = { onTabSelected(index) }
+//            )
+//        }
+//    }
 }
 @Composable
 fun WindSpeedBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     val tabs = listOf("km/h", "m/s", "Knots")
 
-    TabRow(selectedTabIndex = selectedTab) {
-        tabs.forEachIndexed { index, title ->
-            Tab(
-                text = { Text(text = title,
-                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
-                selected = index == selectedTab,
-                onClick = { onTabSelected(index) }
-            )
-        }
-    }
+//    TabRow(selectedTabIndex = selectedTab) {
+//        tabs.forEachIndexed { index, title ->
+//            Tab(
+//                text = { Text(text = title,
+//                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
+//                selected = index == selectedTab,
+//                onClick = { onTabSelected(index) }
+//            )
+//        }
+//    }
 }
 @Composable
 fun PressureBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     val tabs = listOf("hPa", "In Hg", "kPa" , "mmHg")
 
-    TabRow(selectedTabIndex = selectedTab) {
-        tabs.forEachIndexed { index, title ->
-            Tab(
-                text = { Text(text = title,
-                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
-                selected = index == selectedTab,
-                onClick = { onTabSelected(index) }
-            )
-        }
-    }
+//    TabRow(selectedTabIndex = selectedTab) {
+//        tabs.forEachIndexed { index, title ->
+//            Tab(
+//                text = { Text(text = title,
+//                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
+//                selected = index == selectedTab,
+//                onClick = { onTabSelected(index) }
+//            )
+//        }
+//    }
 }
 @Composable
 fun ModeBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     val tabs = listOf("Light Mode", "Night Mode")
 
-    TabRow(selectedTabIndex = selectedTab) {
-        tabs.forEachIndexed { index, title ->
-            Tab(
-                text = { Text(text = title,
-                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
-                selected = index == selectedTab,
-                onClick = { onTabSelected(index) }
-            )
-        }
-    }
+//    TabRow(selectedTabIndex = selectedTab) {
+//        tabs.forEachIndexed { index, title ->
+//            Tab(
+//                text = { Text(text = title,
+//                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
+//                selected = index == selectedTab,
+//                onClick = { onTabSelected(index) }
+//            )
+//        }
+//    }
 }
 
-
+/*
 @Composable
 fun SettingScreen(navController: NavController) {
     var selectedTemperature by remember { mutableIntStateOf(CityData.selectedTemperature) }
@@ -158,3 +158,4 @@ fun SettingScreen(navController: NavController) {
         }
     }
 }
+ */

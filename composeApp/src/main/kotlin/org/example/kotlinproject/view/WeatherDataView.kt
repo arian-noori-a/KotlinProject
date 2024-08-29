@@ -5,16 +5,16 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+////import androidx.compose.material.Button
+//import androidx.compose.material.ButtonDefaults
+//import androidx.compose.material.Text
+//import androidx.compose.runtime.*
+//import androidx.compose.ui.Alignment
+//import androidx.compose.ui.Modifier
+//import androidx.compose.ui.graphics.Color
+//import androidx.compose.ui.input.pointer.pointerInput
+//import androidx.compose.ui.unit.dp
+//import androidx.navigation.NavController
 import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.model.WeatherResponse
 import org.example.kotlinproject.ui.theme.LocalColoring
@@ -26,6 +26,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.text.trimIndent
 
+/*
 @Composable
 fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , navController: NavController) {
     var offsetX by remember { mutableStateOf(0.dp) }
@@ -129,6 +130,7 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
         }
     }
 }
+*/
 
 @SuppressLint("NewApi")
 fun getLocalTime(dt: Long, timezoneOffset: Int): String {
