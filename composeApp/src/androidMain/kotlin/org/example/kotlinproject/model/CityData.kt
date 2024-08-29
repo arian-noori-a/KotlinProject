@@ -1,5 +1,11 @@
 package org.example.kotlinproject.model
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+
 
 object CityData {
 
@@ -14,5 +20,12 @@ object CityData {
     )
 
     lateinit var selectedCity : WeatherResponse
+
+
+
+    var selectedTemperature : Int = 0
+    var selectedWindSpeed : Int = 0
+    var selectedPressure : Int = 0
+    var selectedMode : Int = 0
 
 }

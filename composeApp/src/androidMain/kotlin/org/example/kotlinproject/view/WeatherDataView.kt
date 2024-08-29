@@ -31,14 +31,40 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
     var offsetX by remember { mutableStateOf(0.dp) }
     var dragAmount by remember { mutableFloatStateOf(0f) }
 
+    var temperature = ""
+    if(CityData.selectedTemperature == 0)
+        temperature = "${"%.2f".format(weather.main.temp)}°C"
+    else if(CityData.selectedTemperature == 1)
+        temperature = "${"%.2f".format(((9 * weather.main.temp) / 5) + 32)}°F"
+    else if(CityData.selectedTemperature == 2)
+        temperature = "${"%.2f".format(weather.main.temp - 273)}K"
+
+    var windSpeed = ""
+    if(CityData.selectedWindSpeed == 0)
+        windSpeed = "${weather.wind.speed} m/s"
+    else if(CityData.selectedWindSpeed == 1)
+        windSpeed = "${weather.wind.speed * 3.6} km/h"
+    else if(CityData.selectedWindSpeed == 2)
+        windSpeed = "${weather.wind.speed * 1.94384} Knots"
+
+    var pressure = ""
+    if(CityData.selectedPressure == 0)
+        pressure = "${weather.main.pressure} hPa"
+    else if(CityData.selectedPressure == 1)
+        pressure = "${"%.2f".format(weather.main.pressure * 0.02953)} In Hg"
+    else if(CityData.selectedPressure == 2)
+        pressure = "${weather.main.pressure / 10} kPa"
+    else if(CityData.selectedPressure == 3)
+        pressure = "${"%.2f".format(weather.main.pressure * 0.75)} mmHg"
+
     val weatherInfo = """
         City: ${weather.name}
-        Temperature: ${"%.2f".format(weather.main.temp)}°C                   
+        Temperature: $temperature          
         Weathers
         ${weather.weather.joinToString { "${it.main}: ${it.description}" }}
-        Pressure: ${weather.main.pressure} hPa
+        Pressure: $pressure
         Humidity: ${weather.main.humidity}%
-        WindSpeed: ${weather.wind.speed} m/s
+        WindSpeed: $windSpeed
         Time: ${getLocalTime(weather.dt, weather.timezone)}
     """.trimIndent()
 

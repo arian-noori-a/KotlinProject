@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.ui.theme.LocalSpacing
 
 @Composable
@@ -31,7 +32,7 @@ fun TemperatureTabBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
 }
 @Composable
 fun WindSpeedBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
-    val tabs = listOf("km/h", "m/h", "Knots")
+    val tabs = listOf("km/h", "m/s", "Knots")
 
     TabRow(selectedTabIndex = selectedTab) {
         tabs.forEachIndexed { index, title ->
@@ -46,7 +47,7 @@ fun WindSpeedBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
 }
 @Composable
 fun PressureBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
-    val tabs = listOf("hPa", "Inches", "kPa" , "mmHg")
+    val tabs = listOf("hPa", "In Hg", "kPa" , "mmHg")
 
     TabRow(selectedTabIndex = selectedTab) {
         tabs.forEachIndexed { index, title ->
@@ -78,10 +79,10 @@ fun ModeBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
 
 @Composable
 fun SettingScreen(navController: NavController) {
-    var selectedTemperature by remember { mutableIntStateOf(0) }
-    var selectedWindSpeed by remember { mutableIntStateOf(0) }
-    var selectedPressure by remember { mutableIntStateOf(0) }
-    var selectedMode by remember { mutableIntStateOf(0) }
+    var selectedTemperature by remember { mutableIntStateOf(CityData.selectedTemperature) }
+    var selectedWindSpeed by remember { mutableIntStateOf(CityData.selectedWindSpeed) }
+    var selectedPressure by remember { mutableIntStateOf(CityData.selectedPressure) }
+    var selectedMode by remember { mutableIntStateOf(CityData.selectedMode) }
     Scaffold(
         bottomBar = {
             BottomNavigation {
@@ -121,25 +122,37 @@ fun SettingScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(16.dp))
                 ModeBar (
                     selectedTab = selectedMode,
-                    onTabSelected = { index -> selectedMode = index }
+                    onTabSelected = { index ->
+                        selectedMode = index
+                        CityData.selectedMode = index
+                    }
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
                 TemperatureTabBar(
                     selectedTab = selectedTemperature,
-                    onTabSelected = { index -> selectedTemperature = index }
+                    onTabSelected = { index ->
+                        selectedTemperature = index
+                        CityData.selectedTemperature = index
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
                 WindSpeedBar(
                     selectedTab = selectedWindSpeed,
-                    onTabSelected = { index -> selectedWindSpeed = index }
+                    onTabSelected = { index ->
+                        selectedWindSpeed = index
+                        CityData.selectedWindSpeed = index
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
                 PressureBar(
                     selectedTab = selectedPressure,
-                    onTabSelected = { index -> selectedPressure = index }
+                    onTabSelected = { index ->
+                        selectedPressure = index
+                        CityData.selectedPressure = index
+                    }
                 )
             }
         }
