@@ -27,7 +27,7 @@ retrofit = "2.9.0"
 ui = "1.6.8"
 uiTestJunit4 = "1.6.8"
 uiToolingPreview = "1.6.8"
-sqlDelight = "1.5.4"  # Added SQLDelight version
+sqlDelight = "1.5.5"
 
 [libraries]
 androidx-core-ktx-v1101 = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }

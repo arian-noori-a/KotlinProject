@@ -13,6 +13,6 @@ object CityData {
         "Tehran"
     )
 
-    var selectedCity : String = ""
+    lateinit var selectedCity : WeatherResponse
 
 }

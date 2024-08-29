@@ -57,9 +57,9 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
                 },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color.Red,
-                    contentColor = Color.White // Ensure text is visible against the red background
+                    contentColor = Color.White
                 ),
-                elevation = ButtonDefaults.elevation(0.dp) // Remove default elevation to ensure uniform color
+                elevation = ButtonDefaults.elevation(0.dp)
             ) {
                 Text("Remove Weather")
             }
@@ -76,10 +76,14 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
                         onDragEnd = {
                             if(offsetX < 80.dp)
                                 offsetX = 0.dp
+                            if(offsetX > 80.dp)
+                                offsetX = 80.dp
                         },
                         onDragCancel = {
                             if(offsetX < 80.dp)
                                 offsetX = 0.dp
+                            if(offsetX > 80.dp)
+                                offsetX = 80.dp
                         }
                     ) { _, dragAmountDelta ->
                         dragAmount += dragAmountDelta
@@ -91,7 +95,7 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
                 text = weatherInfo,
                 color = LocalColoring.current.NightMode.textColor,
                 modifier = Modifier.clickable(onClick = {
-                    CityData.selectedCity = weather.name
+                    CityData.selectedCity = weather
                     navController.navigate("WeatherMenu")
                 })
             )

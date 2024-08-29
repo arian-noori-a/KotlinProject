@@ -8,7 +8,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
-import androidx.recyclerview.widget.RecyclerView
 import org.example.kotlinproject.model.ApiClient
 import org.example.kotlinproject.ui.theme.LocalColoring
 import org.example.kotlinproject.view.WeatherAppNavGraph
