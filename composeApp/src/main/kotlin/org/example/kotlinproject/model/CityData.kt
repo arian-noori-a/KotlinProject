@@ -1,6 +1,6 @@
 package org.example.kotlinproject.model
 
-
+import com.russhwolf.settings.Settings
 
 
 object CityData {
@@ -17,11 +17,5 @@ object CityData {
 
     lateinit var selectedCity : WeatherResponse
 
-
-
-    var selectedTemperature : Int = 0
-    var selectedWindSpeed : Int = 0
-    var selectedPressure : Int = 0
-    var selectedMode : Int = 0
 
 }

@@ -12,6 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.russhwolf.settings.Settings
+import com.russhwolf.settings.set
 import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.ui.theme.LocalSpacing
 
@@ -78,11 +80,11 @@ fun ModeBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
 
 
 @Composable
-fun SettingScreen(navController: NavController) {
-    var selectedTemperature by remember { mutableIntStateOf(CityData.selectedTemperature) }
-    var selectedWindSpeed by remember { mutableIntStateOf(CityData.selectedWindSpeed) }
-    var selectedPressure by remember { mutableIntStateOf(CityData.selectedPressure) }
-    var selectedMode by remember { mutableIntStateOf(CityData.selectedMode) }
+fun SettingScreen(navController: NavController , settings: Settings) {
+    var selectedTemperature by remember { mutableIntStateOf(settings.getInt("Temperature" , 0)) }
+    var selectedWindSpeed by remember { mutableIntStateOf(settings.getInt("Wind" , 0)) }
+    var selectedPressure by remember { mutableIntStateOf(settings.getInt("Pressure" , 0)) }
+    var selectedMode by remember { mutableIntStateOf(settings.getInt("Mode" , 0)) }
     Scaffold(
         bottomBar = {
             BottomNavigation {
@@ -123,8 +125,8 @@ fun SettingScreen(navController: NavController) {
                 ModeBar (
                     selectedTab = selectedMode,
                     onTabSelected = { index ->
+                        settings.putInt("Mode" , index)
                         selectedMode = index
-                        CityData.selectedMode = index
                     }
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -132,8 +134,8 @@ fun SettingScreen(navController: NavController) {
                 TemperatureTabBar(
                     selectedTab = selectedTemperature,
                     onTabSelected = { index ->
+                        settings.putInt("Temperature" , index)
                         selectedTemperature = index
-                        CityData.selectedTemperature = index
                     }
                 )
 
@@ -141,8 +143,8 @@ fun SettingScreen(navController: NavController) {
                 WindSpeedBar(
                     selectedTab = selectedWindSpeed,
                     onTabSelected = { index ->
+                        settings.putInt("Wind" , index)
                         selectedWindSpeed = index
-                        CityData.selectedWindSpeed = index
                     }
                 )
 
@@ -150,8 +152,8 @@ fun SettingScreen(navController: NavController) {
                 PressureBar(
                     selectedTab = selectedPressure,
                     onTabSelected = { index ->
+                        settings.putInt("Pressure" , index)
                         selectedPressure = index
-                        CityData.selectedPressure = index
                     }
                 )
             }

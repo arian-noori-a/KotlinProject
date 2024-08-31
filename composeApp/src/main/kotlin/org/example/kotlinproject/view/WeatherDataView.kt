@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.russhwolf.settings.Settings
 import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.model.WeatherResponse
 import org.example.kotlinproject.ui.theme.LocalColoring
@@ -31,26 +32,27 @@ import kotlin.text.trimIndent
 
 
 @Composable
-fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , navController: NavController) {
+fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , navController: NavController,
+                    settings: Settings) {
     var offsetX by remember { mutableStateOf(0.dp) }
     var dragAmount by remember { mutableFloatStateOf(0f) }
 
     var temperature = ""
-    when (CityData.selectedTemperature) {
+    when (settings.getInt("Temperature" , 0)) {
         0 -> temperature = "${"%.2f".format(weather.main.temp)}°C"
         1 -> temperature = "${"%.2f".format(((9 * weather.main.temp) / 5) + 32)}°F"
         2 -> temperature = "${"%.2f".format(weather.main.temp - 273)}K"
     }
 
     var windSpeed = ""
-    when (CityData.selectedWindSpeed) {
+    when (settings.getInt("Wind" , 0)) {
         0 -> windSpeed = "${weather.wind.speed} m/s"
         1 -> windSpeed = "${"%.2f".format(weather.wind.speed * 3.6)} km/h"
         2 -> windSpeed = "${"%.2f".format(weather.wind.speed * 1.94384)} Knots"
     }
 
     var pressure = ""
-    when (CityData.selectedPressure) {
+    when (settings.getInt("Pressure" , 0)) {
         0 -> pressure = "${weather.main.pressure} hPa"
         1 -> pressure = "${"%.2f".format(weather.main.pressure * 0.02953)} In Hg"
         2 -> pressure = "${weather.main.pressure / 10} kPa"
