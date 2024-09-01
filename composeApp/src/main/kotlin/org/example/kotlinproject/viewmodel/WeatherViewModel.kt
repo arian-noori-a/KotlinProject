@@ -18,7 +18,6 @@ class WeatherViewModel(private val apiKey: String) : ViewModel() {
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
 
-    private val settings : SharedPreferencesSettings? = null
 
     fun fetchWeather(cityName: String) {
         viewModelScope.launch {

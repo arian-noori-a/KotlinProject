@@ -21,7 +21,6 @@ import androidx.navigation.NavController
 import com.russhwolf.settings.Settings
 import org.example.kotlinproject.model.ApiClient
 import org.example.kotlinproject.model.WeatherResponse
-import org.example.kotlinproject.ui.theme.LocalColoring
 import org.example.kotlinproject.ui.theme.LocalSpacing
 import org.example.kotlinproject.viewmodel.WeatherViewModel
 import java.time.Instant
@@ -120,7 +119,7 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
         ) {
             Text(
                 text = weatherInfo,
-                color = LocalColoring.current.nightMode.textColor,
+                color = if(settings.getInt("Mode" , 0) == 0) Color.Black else Color.White ,
                 modifier = Modifier.clickable(onClick = {
                     ApiClient.selectedCity = weather
                     navController.navigate("WeatherMenu")

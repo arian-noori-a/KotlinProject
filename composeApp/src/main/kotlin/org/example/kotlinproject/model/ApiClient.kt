@@ -1,6 +1,7 @@
 package org.example.kotlinproject.model
 
 
+import androidx.compose.ui.graphics.Color
 import com.russhwolf.settings.Settings
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -54,6 +55,20 @@ object ApiClient {
 
     fun getSetting(): Settings {
         return settings
+    }
+
+    fun getBackGroundColor(): Color {
+        return if(settings.getInt("Mode" , 0) == 0)
+            Color.White
+        else
+            Color.DarkGray
+    }
+
+    fun getTextColor(): Color {
+        return if(settings.getInt("Mode" , 0) == 0)
+            Color.Black
+        else
+            Color.White
     }
 
 }

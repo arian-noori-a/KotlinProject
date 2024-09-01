@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.russhwolf.settings.Settings
 import org.example.kotlinproject.model.ApiClient
 import org.example.kotlinproject.ui.theme.LocalSpacing
 
@@ -110,13 +109,13 @@ fun SettingScreen(navController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.DarkGray)
+                .background(if(ApiClient.getSetting().getInt("Mode" , 0) == 0) Color.White else Color.DarkGray)
                 .padding(paddingValues)
         ) {
             Column(modifier = Modifier.padding(LocalSpacing.current.medium)) {
                 Text(
                     text = "Settings",
-                    color = Color.White,
+                    color = if(settings.getInt("Mode" , 0) == 0) Color.Black else Color.White,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.h6
                 )

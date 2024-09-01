@@ -27,20 +27,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.compose.runtime.collectAsState
 import org.example.kotlinproject.model.ApiClient
-import org.example.kotlinproject.ui.theme.LocalColoring
 import org.example.kotlinproject.ui.theme.LocalSpacing
 import org.example.kotlinproject.viewmodel.WeatherViewModel
 
+
 @Composable
-fun WeatherScreen(navController: NavController) {
+fun MainMenu(navController: NavController) {
 
     val cities = ApiClient.cities
     val viewModel: WeatherViewModel = viewModel {
         WeatherViewModel(apiKey = ApiClient.getKey())
     }
-
     val weatherList by viewModel.weatherList.collectAsState()
     val error by viewModel.error.collectAsState()
+
     var cityName by remember {
         mutableStateOf("")
     }
@@ -87,13 +87,13 @@ fun WeatherScreen(navController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.DarkGray)
+                .background(ApiClient.getBackGroundColor())
                 .padding(paddingValues)
         ) {
             Column(modifier = Modifier.padding(LocalSpacing.current.small)) {
                 Text(
                     text = "Enter the city you want to see its information:",
-                    color = LocalColoring.current.nightMode.textColor,
+                    color = ApiClient.getTextColor(),
                     fontWeight = FontWeight.Bold
                 )
 
@@ -146,7 +146,7 @@ fun WeatherScreen(navController: NavController) {
                 ) {
                     Text(
                         text = error.toString(),
-                        color = LocalColoring.current.nightMode.textColor,
+                        color = ApiClient.getTextColor(),
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
