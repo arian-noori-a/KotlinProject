@@ -22,8 +22,6 @@ import org.example.kotlinproject.view.WeatherAppNavGraph
 
 class MainActivity : ComponentActivity() {
 
-
-
     companion object {
         // The key which you get from the data holder website:
         private val API_KEY = ApiClient.getKey()
@@ -31,18 +29,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // the memory of the setting of the app:
+        val settings = SharedPreferencesSettings(
+            this.getSharedPreferences("MyAppSettings" , Context.MODE_PRIVATE)
+        )
 
         setContent {
-
-            val settings = createSettings(this)
-
-//            settings.putInt("Mode" , 0)
-//            settings.putInt("Wind" , 0)
-//            settings.putInt("Temperature" , 0)
-//            settings.putInt("Pressure" , 0)
-
-
-
 
 
             Box(modifier = Modifier.fillMaxSize()
@@ -53,9 +45,5 @@ class MainActivity : ComponentActivity() {
 
         }
 
-    }
-    private fun createSettings(context: Context): Settings {
-        val sharedPreferences = context.getSharedPreferences("MyAppSettings", Context.MODE_PRIVATE)
-        return SharedPreferencesSettings(sharedPreferences)
     }
 }
