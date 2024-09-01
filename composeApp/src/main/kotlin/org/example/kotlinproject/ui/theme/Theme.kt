@@ -6,9 +6,9 @@ import androidx.compose.ui.graphics.Color
 
 
 data class Theme(
-    val NightMode: Colors =  Colors(Color.White , Color.DarkGray),
-    val LightMode: Colors = Colors(Color.Black , Color.White),
-    val ColourFull: Colors = Colors(Color.Yellow , Color.Red)
+    val nightMode: Colors =  Colors(Color.White , Color.DarkGray),
+    val lightMode: Colors = Colors(Color.Black , Color.White),
+    val colorful: Colors = Colors(Color.Yellow , Color.Red)
 )
 
 val LocalColoring = compositionLocalOf {

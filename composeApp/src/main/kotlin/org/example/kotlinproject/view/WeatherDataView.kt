@@ -39,9 +39,9 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
 
     var temperature = ""
     when (settings.getInt("Temperature" , 0)) {
-        0 -> temperature = "${"%.2f".format(weather.main.temp)}°C"
-        1 -> temperature = "${"%.2f".format(((9 * weather.main.temp) / 5) + 32)}°F"
-        2 -> temperature = "${"%.2f".format(weather.main.temp - 273)}K"
+        0 -> temperature = "${"%.2f".format(weather.main.temp)}° C"
+        1 -> temperature = "${"%.2f".format(((9 * weather.main.temp) / 5) + 32)}° F"
+        2 -> temperature = "${"%.2f".format(weather.main.temp - 273)} K"
     }
 
     var windSpeed = ""
@@ -56,7 +56,7 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
         0 -> pressure = "${weather.main.pressure} hPa"
         1 -> pressure = "${"%.2f".format(weather.main.pressure * 0.02953)} In Hg"
         2 -> pressure = "${weather.main.pressure / 10} kPa"
-        3 -> pressure = "${"%.2f".format(weather.main.pressure * 0.75)} mmHg"
+        3 -> pressure = "${"%.2f".format(weather.main.pressure * 0.75)} mm Hg"
     }
 
     val weatherInfo = """
@@ -121,7 +121,7 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
         ) {
             Text(
                 text = weatherInfo,
-                color = LocalColoring.current.NightMode.textColor,
+                color = LocalColoring.current.nightMode.textColor,
                 modifier = Modifier.clickable(onClick = {
                     CityData.selectedCity = weather
                     navController.navigate("WeatherMenu")

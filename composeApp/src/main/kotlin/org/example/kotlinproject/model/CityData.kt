@@ -1,6 +1,5 @@
 package org.example.kotlinproject.model
 
-import com.russhwolf.settings.Settings
 
 
 object CityData {

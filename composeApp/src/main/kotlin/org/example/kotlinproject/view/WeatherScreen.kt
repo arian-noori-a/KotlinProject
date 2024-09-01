@@ -94,7 +94,7 @@ fun WeatherScreen(navController: NavController, apikey: String , settings: Setti
             Column(modifier = Modifier.padding(LocalSpacing.current.small)) {
                 Text(
                     text = "Enter the city you want to see its information:",
-                    color = LocalColoring.current.NightMode.textColor,
+                    color = LocalColoring.current.nightMode.textColor,
                     fontWeight = FontWeight.Bold
                 )
 
@@ -147,7 +147,7 @@ fun WeatherScreen(navController: NavController, apikey: String , settings: Setti
                 ) {
                     Text(
                         text = error.toString(),
-                        color = LocalColoring.current.NightMode.textColor,
+                        color = LocalColoring.current.nightMode.textColor,
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
