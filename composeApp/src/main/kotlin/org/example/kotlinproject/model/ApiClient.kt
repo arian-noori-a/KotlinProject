@@ -1,6 +1,7 @@
 package org.example.kotlinproject.model
 
 
+import com.russhwolf.settings.Settings
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -11,6 +12,16 @@ object ApiClient {
 
     private const val KEY = "4e6b57fbb69ef616ce47bd9a4e88686f"
     private const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
+    private val settings: Settings = Settings()
+    lateinit var selectedCity : WeatherResponse
+    val cities = mutableListOf(
+        "Madrid",
+        "Berlin",
+        "Paris",
+        "New York",
+        "London",
+        "Tehran"
+    )
 
 
     private val retrofit: Retrofit = Retrofit.Builder()
@@ -39,6 +50,10 @@ object ApiClient {
 
     fun getKey(): String {
         return KEY
+    }
+
+    fun getSetting(): Settings {
+        return settings
     }
 
 }

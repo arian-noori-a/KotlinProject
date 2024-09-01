@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.russhwolf.settings.Settings
+import org.example.kotlinproject.model.ApiClient
 import org.example.kotlinproject.ui.theme.LocalSpacing
 
 @Composable
@@ -78,7 +79,8 @@ fun ModeBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
 
 
 @Composable
-fun SettingScreen(navController: NavController , settings: Settings) {
+fun SettingScreen(navController: NavController) {
+    val settings = ApiClient.getSetting()
     var selectedTemperature by remember { mutableIntStateOf(settings.getInt("Temperature" , 0)) }
     var selectedWindSpeed by remember { mutableIntStateOf(settings.getInt("Wind" , 0)) }
     var selectedPressure by remember { mutableIntStateOf(settings.getInt("Pressure" , 0)) }

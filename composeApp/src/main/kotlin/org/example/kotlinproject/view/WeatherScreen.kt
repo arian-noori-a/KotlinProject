@@ -1,5 +1,5 @@
-
 package org.example.kotlinproject.view
+
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -26,18 +26,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.compose.runtime.collectAsState
-import com.russhwolf.settings.Settings
-import org.example.kotlinproject.model.CityData
+import org.example.kotlinproject.model.ApiClient
 import org.example.kotlinproject.ui.theme.LocalColoring
 import org.example.kotlinproject.ui.theme.LocalSpacing
 import org.example.kotlinproject.viewmodel.WeatherViewModel
 
 @Composable
-fun WeatherScreen(navController: NavController, apikey: String , settings: Settings) {
+fun WeatherScreen(navController: NavController) {
 
-    val cities = CityData.cities
+    val cities = ApiClient.cities
     val viewModel: WeatherViewModel = viewModel {
-        WeatherViewModel(apiKey = apikey)
+        WeatherViewModel(apiKey = ApiClient.getKey())
     }
 
     val weatherList by viewModel.weatherList.collectAsState()
@@ -125,7 +124,7 @@ fun WeatherScreen(navController: NavController, apikey: String , settings: Setti
 
                 LazyColumn {
                     items(weatherList) { weather ->
-                        WeatherDataView(weather , viewModel , navController , settings)
+                        WeatherDataView(weather , viewModel , navController)
                         Spacer(modifier = Modifier.height(LocalSpacing.current.small))
                         Divider(color = Color.Gray)
                         Spacer(modifier = Modifier.height(LocalSpacing.current.small))

@@ -12,14 +12,14 @@ import com.russhwolf.settings.Settings
 
 // The main composable function in which we save our menus:
 @Composable
-fun WeatherAppNavGraph(apikey: String , settings: Settings) {
+fun WeatherAppNavGraph() {
     // to save our navigation state:
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "MainMenu") {
 
-        composable("MainMenu") { WeatherScreen(navController, apikey , settings) }
-        composable("SettingMenu") { SettingScreen(navController , settings) }
+        composable("MainMenu") { WeatherScreen(navController) }
+        composable("SettingMenu") { SettingScreen(navController) }
         composable("WeatherMenu") { SelectedWeatherMenu(navController) }
     }
 }

@@ -1,6 +1,10 @@
 package org.example.kotlinproject.model
 
 
+
+// the format of the received weather data from the
+// URL website
+
 data class WeatherResponse(
     val coord: Coord,
     val weather: List<Weather>,

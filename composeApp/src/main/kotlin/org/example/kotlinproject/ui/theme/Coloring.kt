@@ -5,14 +5,14 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 
-data class Theme(
+data class Coloring(
     val nightMode: Colors =  Colors(Color.White , Color.DarkGray),
     val lightMode: Colors = Colors(Color.Black , Color.White),
     val colorful: Colors = Colors(Color.Yellow , Color.Red)
 )
 
 val LocalColoring = compositionLocalOf {
-    Theme()
+    Coloring()
 }
 
 class Colors(

@@ -3,11 +3,11 @@ package org.example.kotlinproject.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.russhwolf.settings.SharedPreferencesSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.example.kotlinproject.model.ApiClient
-import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.model.WeatherResponse
 
 class WeatherViewModel(private val apiKey: String) : ViewModel() {
@@ -17,6 +17,8 @@ class WeatherViewModel(private val apiKey: String) : ViewModel() {
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
+
+    private val settings : SharedPreferencesSettings? = null
 
     fun fetchWeather(cityName: String) {
         viewModelScope.launch {
@@ -29,8 +31,8 @@ class WeatherViewModel(private val apiKey: String) : ViewModel() {
                 val updatedWeatherList = _weatherList.value.filter { it.name != newWeather.name }
                 _weatherList.value = listOf(newWeather) + updatedWeatherList
 
-                if (!CityData.cities.contains(cityName)) {
-                    CityData.cities.add(cityName)
+                if (!ApiClient.cities.contains(cityName)) {
+                    ApiClient.cities.add(cityName)
                 }
 
             } catch (e: Exception) {
@@ -41,6 +43,7 @@ class WeatherViewModel(private val apiKey: String) : ViewModel() {
     }
 
     fun removeWeather(cityName: String) {
-        CityData.cities.remove(cityName)
+        ApiClient.cities.remove(cityName)
     }
+
 }

@@ -19,7 +19,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.russhwolf.settings.Settings
-import org.example.kotlinproject.model.CityData
+import org.example.kotlinproject.model.ApiClient
 import org.example.kotlinproject.model.WeatherResponse
 import org.example.kotlinproject.ui.theme.LocalColoring
 import org.example.kotlinproject.ui.theme.LocalSpacing
@@ -32,11 +32,10 @@ import kotlin.text.trimIndent
 
 
 @Composable
-fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , navController: NavController,
-                    settings: Settings) {
+fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , navController: NavController) {
     var offsetX by remember { mutableStateOf(0.dp) }
     var dragAmount by remember { mutableFloatStateOf(0f) }
-
+    val settings = ApiClient.getSetting()
     var temperature = ""
     when (settings.getInt("Temperature" , 0)) {
         0 -> temperature = "${"%.2f".format(weather.main.temp)}° C"
@@ -123,7 +122,7 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
                 text = weatherInfo,
                 color = LocalColoring.current.nightMode.textColor,
                 modifier = Modifier.clickable(onClick = {
-                    CityData.selectedCity = weather
+                    ApiClient.selectedCity = weather
                     navController.navigate("WeatherMenu")
                 })
             )
