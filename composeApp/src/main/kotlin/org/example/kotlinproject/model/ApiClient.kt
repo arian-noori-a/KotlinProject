@@ -15,14 +15,6 @@ object ApiClient {
     private const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
     private val settings: Settings = Settings()
     lateinit var selectedCity : WeatherResponse
-    val cities = mutableListOf(
-        "Madrid",
-        "Berlin",
-        "Paris",
-        "New York",
-        "London",
-        "Tehran"
-    )
 
 
     private val retrofit: Retrofit = Retrofit.Builder()

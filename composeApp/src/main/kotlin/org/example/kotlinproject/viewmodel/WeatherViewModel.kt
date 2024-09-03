@@ -1,17 +1,21 @@
 package org.example.kotlinproject.viewmodel
 
 
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.russhwolf.settings.SharedPreferencesSettings
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.example.kotlinproject.db.CityQueries
 import org.example.kotlinproject.model.ApiClient
+import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.model.WeatherResponse
 
-class WeatherViewModel(private val apiKey: String) : ViewModel() {
+class WeatherViewModel : ViewModel() {
 
+    private val apiKey = ApiClient.getKey()
     private val _weatherList = MutableStateFlow<List<WeatherResponse>>(emptyList())
     val weatherList: StateFlow<List<WeatherResponse>> = _weatherList
 
@@ -19,7 +23,7 @@ class WeatherViewModel(private val apiKey: String) : ViewModel() {
     val error: StateFlow<String?> = _error
 
 
-    fun fetchWeather(cityName: String) {
+    fun fetchWeather(cityName: String , cityQueries: CityQueries) {
         viewModelScope.launch {
 
             _error.value = null
@@ -30,8 +34,13 @@ class WeatherViewModel(private val apiKey: String) : ViewModel() {
                 val updatedWeatherList = _weatherList.value.filter { it.name != newWeather.name }
                 _weatherList.value = listOf(newWeather) + updatedWeatherList
 
-                if (!ApiClient.cities.contains(cityName)) {
-                    ApiClient.cities.add(cityName)
+                if (!CityData.cities.contains(cityName)) {
+                    CityData.cities.add(cityName)
+                    cityQueries.insertCity(cityName , newWeather.main.temp.toDouble() , newWeather.main.humidity.toDouble() , newWeather.main.pressure.toDouble() , newWeather.weather.toString())
+                }
+                else {
+                    cityQueries.deleteCityByName(cityName)
+                    cityQueries.insertCity(cityName , newWeather.main.temp.toDouble() , newWeather.main.humidity.toDouble() , newWeather.main.pressure.toDouble() , newWeather.weather.toString())
                 }
 
             } catch (e: Exception) {
@@ -41,8 +50,13 @@ class WeatherViewModel(private val apiKey: String) : ViewModel() {
         }
     }
 
-    fun removeWeather(cityName: String) {
-        ApiClient.cities.remove(cityName)
+    fun removeWeather(cityName: String , cityQueries: CityQueries) {
+        _weatherList.value = _weatherList.value.filter { it.name != cityName }
+        _weatherList.value = _weatherList.value.filter { it.name != cityName.lowercase() }
+        CityData.cities.remove(cityName)
+        CityData.cities.remove(cityName.lowercase())
+        cityQueries.deleteCityByName(cityName.lowercase())
+        cityQueries.deleteCityByName(cityName)
     }
 
 }

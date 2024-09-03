@@ -18,12 +18,12 @@ fun SelectedWeatherMenu(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(ApiClient.selectedCity.name)
-        Text(ApiClient.selectedCity.weather.toString())
-        Text(ApiClient.selectedCity.main.humidity.toString())
-        Text(ApiClient.selectedCity.main.pressure.toString())
-        Text(ApiClient.selectedCity.wind.speed.toString())
-        Text(getLocalTime(ApiClient.selectedCity.dt , ApiClient.selectedCity.timezone))
+//        Text(ApiClient.selectedCity.name)
+//        Text(ApiClient.selectedCity.weather.toString())
+//        Text(ApiClient.selectedCity.main.humidity.toString())
+//        Text(ApiClient.selectedCity.main.pressure.toString())
+//        Text(ApiClient.selectedCity.wind.speed.toString())
+//        Text(getLocalTime(ApiClient.selectedCity.dt , ApiClient.selectedCity.timezone))
         Button(onClick = {
             navController.navigate("MainMenu")
         }) {

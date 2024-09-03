@@ -1,6 +1,7 @@
 package org.example.kotlinproject.view
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
@@ -19,7 +20,10 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.russhwolf.settings.Settings
+import kotlinx.coroutines.delay
+import org.example.kotlinproject.db.CityQueries
 import org.example.kotlinproject.model.ApiClient
+import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.model.WeatherResponse
 import org.example.kotlinproject.ui.theme.LocalSpacing
 import org.example.kotlinproject.viewmodel.WeatherViewModel
@@ -31,7 +35,7 @@ import kotlin.text.trimIndent
 
 
 @Composable
-fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , navController: NavController) {
+fun WeatherDataView(weather: WeatherResponse, viewModel: WeatherViewModel, navController: NavController , cityQueries: CityQueries) {
     var offsetX by remember { mutableStateOf(0.dp) }
     var dragAmount by remember { mutableFloatStateOf(0f) }
     val settings = ApiClient.getSetting()
@@ -78,7 +82,7 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
         if (offsetX > dragThreshold) {
             Button(
                 onClick = {
-                    viewModel.removeWeather(weather.name)
+                    viewModel.removeWeather(weather.name , cityQueries)
                     navController.navigate("MainMenu")
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -100,15 +104,15 @@ fun WeatherDataView(weather: WeatherResponse , viewModel: WeatherViewModel , nav
                 .pointerInput(Unit) {
                     detectHorizontalDragGestures(
                         onDragEnd = {
-                            if(offsetX < 80.dp)
+                            if (offsetX < 80.dp)
                                 offsetX = 0.dp
-                            if(offsetX > 80.dp)
+                            if (offsetX > 80.dp)
                                 offsetX = 81.dp
                         },
                         onDragCancel = {
-                            if(offsetX < 80.dp)
+                            if (offsetX < 80.dp)
                                 offsetX = 0.dp
-                            if(offsetX > 80.dp)
+                            if (offsetX > 80.dp)
                                 offsetX = 81.dp
                         }
                     ) { _, dragAmountDelta ->

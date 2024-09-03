@@ -1,6 +1,7 @@
 package org.example.kotlinproject.view
 
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,21 +24,20 @@ import androidx.compose.foundation.layout.padding
 import kotlinx.coroutines.delay
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.compose.runtime.collectAsState
+import org.example.kotlinproject.db.City
+import org.example.kotlinproject.db.CityQueries
 import org.example.kotlinproject.model.ApiClient
+import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.ui.theme.LocalSpacing
 import org.example.kotlinproject.viewmodel.WeatherViewModel
 
 
 @Composable
-fun MainMenu(navController: NavController) {
+fun MainMenu(navController: NavController, viewModel: WeatherViewModel, cityQueries: CityQueries) {
 
-    val cities = ApiClient.cities
-    val viewModel: WeatherViewModel = viewModel {
-        WeatherViewModel(apiKey = ApiClient.getKey())
-    }
+
     val weatherList by viewModel.weatherList.collectAsState()
     val error by viewModel.error.collectAsState()
 
@@ -47,13 +47,17 @@ fun MainMenu(navController: NavController) {
     var showError by remember {
         mutableStateOf(false)
     }
-
-    LaunchedEffect(Unit) {
-        for (city in cities) {
-            viewModel.fetchWeather(city)
-        }
+    
+    for (city in cityQueries.selectAllCities().executeAsList()) {
+        CityData.cities.add(city.name)
     }
 
+
+    LaunchedEffect(Unit) {
+        for (city in CityData.cities) {
+            viewModel.fetchWeather(city , cityQueries)
+        }
+    }
     LaunchedEffect(error) {
         if (error != null) {
             showError = true
@@ -66,8 +70,16 @@ fun MainMenu(navController: NavController) {
         bottomBar = {
             BottomNavigation {
                 BottomNavigationItem(
-                    icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
-                    label = { Text(text = "Home" , fontWeight = FontWeight.Bold) },
+                    icon = {
+                        Icon(
+                            Icons.Filled.Home,
+                            contentDescription = "Home"
+                        )},
+                    label = {
+                        Text(
+                            text = "Home",
+                            fontWeight = FontWeight.Bold
+                        )},
                     selected = true,
                     onClick = {
                         navController.navigate("MainMenu")
@@ -112,7 +124,7 @@ fun MainMenu(navController: NavController) {
                 ) {
                     Button(
                         onClick = {
-                            viewModel.fetchWeather(cityName)
+                            viewModel.fetchWeather(cityName , cityQueries)
                             cityName = ""
                         }
                     ) {
@@ -124,7 +136,7 @@ fun MainMenu(navController: NavController) {
 
                 LazyColumn {
                     items(weatherList) { weather ->
-                        WeatherDataView(weather , viewModel , navController)
+                        WeatherDataView(weather , viewModel, navController , cityQueries)
                         Spacer(modifier = Modifier.height(LocalSpacing.current.small))
                         Divider(color = Color.Gray)
                         Spacer(modifier = Modifier.height(LocalSpacing.current.small))
