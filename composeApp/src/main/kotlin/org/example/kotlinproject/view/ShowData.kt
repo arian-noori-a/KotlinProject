@@ -5,11 +5,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Button
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.ButtonDefaults
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment

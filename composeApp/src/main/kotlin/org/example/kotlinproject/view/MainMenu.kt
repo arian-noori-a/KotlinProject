@@ -1,7 +1,6 @@
 package org.example.kotlinproject.view
 
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -47,12 +46,14 @@ fun MainMenu(
     var showError by remember {
         mutableStateOf(false)
     }
-
+    // when you open this menu, the cities which name was in the cityQueries,
+    // would be used in the fetch weather function:
     LaunchedEffect(Unit) {
         for (city in cityQueries.selectAllCities().executeAsList()) {
             viewModel.fetchWeather(city.name , cityQueries)
         }
     }
+
     LaunchedEffect(error) {
         if (error != null) {
             showError = true
@@ -129,6 +130,8 @@ fun MainMenu(
 
                 Spacer(modifier = Modifier.height(LocalSpacing.current.small))
 
+                // the weathers would be shown in a lazy column base on the data
+                // in the weatherList of the view model:
                 LazyColumn {
                     items(weatherList) { weather ->
                         ShowData(weather , viewModel, navController , cityQueries)

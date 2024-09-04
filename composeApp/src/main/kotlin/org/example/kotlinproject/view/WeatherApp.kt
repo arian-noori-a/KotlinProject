@@ -1,7 +1,6 @@
 package org.example.kotlinproject.view
 
 
-import SelectedWeatherMenu
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -53,7 +52,7 @@ fun WeatherApp(context: Context) {
                 SettingMenu(navController)
             }
             composable("WeatherMenu") {
-                SelectedWeatherMenu(navController)
+                SelectedWeatherMenu(navController , viewModel)
             }
         }
     }
