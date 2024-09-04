@@ -13,10 +13,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-
             WeatherApp(this)
-
         }
-
     }
+
 }

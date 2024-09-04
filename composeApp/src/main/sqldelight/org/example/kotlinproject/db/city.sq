@@ -1,15 +1,15 @@
 CREATE TABLE city (
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE,
-    temperature REAL NOT NULL,
-    pressure REAL NOT NULL,
-    windSpeed REAL NOT NULL,
-    weather TEXT NOT NULL
-);
+     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+     name TEXT NOT NULL UNIQUE,
+     temperature REAL NOT NULL,
+     pressure REAL NOT NULL,
+     windSpeed REAL NOT NULL,
+     weather TEXT NOT NULL
+ );
 
 insertCity:
 INSERT INTO city(name, temperature, pressure, windSpeed, weather)
-VALUES (?, ?,?, ?, ?);
+VALUES (?, ?, ?, ?, ?);
 
 selectAllCities:
 SELECT * FROM city;
@@ -25,5 +25,3 @@ DELETE FROM city;
 
 deleteCityByName:
 DELETE FROM city WHERE name = ?;
-
-

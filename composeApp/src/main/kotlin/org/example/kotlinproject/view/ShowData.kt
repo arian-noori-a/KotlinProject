@@ -1,7 +1,6 @@
 package org.example.kotlinproject.view
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
@@ -19,11 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.russhwolf.settings.Settings
-import kotlinx.coroutines.delay
 import org.example.kotlinproject.db.CityQueries
 import org.example.kotlinproject.model.ApiClient
-import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.model.WeatherResponse
 import org.example.kotlinproject.ui.theme.LocalSpacing
 import org.example.kotlinproject.viewmodel.WeatherViewModel
@@ -35,7 +31,7 @@ import kotlin.text.trimIndent
 
 
 @Composable
-fun WeatherDataView(weather: WeatherResponse, viewModel: WeatherViewModel, navController: NavController , cityQueries: CityQueries) {
+fun ShowData(weather: WeatherResponse, viewModel: WeatherViewModel, navController: NavController, cityQueries: CityQueries) {
     var offsetX by remember { mutableStateOf(0.dp) }
     var dragAmount by remember { mutableFloatStateOf(0f) }
     val settings = ApiClient.getSetting()

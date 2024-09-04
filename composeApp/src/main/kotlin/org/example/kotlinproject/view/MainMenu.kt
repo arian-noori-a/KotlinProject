@@ -26,17 +26,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.compose.runtime.collectAsState
-import org.example.kotlinproject.db.City
 import org.example.kotlinproject.db.CityQueries
-import org.example.kotlinproject.model.ApiClient
-import org.example.kotlinproject.model.CityData
 import org.example.kotlinproject.ui.theme.LocalSpacing
 import org.example.kotlinproject.viewmodel.WeatherViewModel
 
 
 @Composable
-fun MainMenu(navController: NavController, viewModel: WeatherViewModel, cityQueries: CityQueries) {
-
+fun MainMenu(
+    navController: NavController,
+    viewModel: WeatherViewModel,
+    cityQueries: CityQueries
+) {
 
     val weatherList by viewModel.weatherList.collectAsState()
     val error by viewModel.error.collectAsState()
@@ -47,15 +47,10 @@ fun MainMenu(navController: NavController, viewModel: WeatherViewModel, cityQuer
     var showError by remember {
         mutableStateOf(false)
     }
-    
-    for (city in cityQueries.selectAllCities().executeAsList()) {
-        CityData.cities.add(city.name)
-    }
-
 
     LaunchedEffect(Unit) {
-        for (city in CityData.cities) {
-            viewModel.fetchWeather(city , cityQueries)
+        for (city in cityQueries.selectAllCities().executeAsList()) {
+            viewModel.fetchWeather(city.name , cityQueries)
         }
     }
     LaunchedEffect(error) {
@@ -99,13 +94,13 @@ fun MainMenu(navController: NavController, viewModel: WeatherViewModel, cityQuer
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(ApiClient.getBackGroundColor())
+                .background(viewModel.getBackgroundColor())
                 .padding(paddingValues)
         ) {
             Column(modifier = Modifier.padding(LocalSpacing.current.small)) {
                 Text(
                     text = "Enter the city you want to see its information:",
-                    color = ApiClient.getTextColor(),
+                    color = viewModel.getTextColor(),
                     fontWeight = FontWeight.Bold
                 )
 
@@ -136,7 +131,7 @@ fun MainMenu(navController: NavController, viewModel: WeatherViewModel, cityQuer
 
                 LazyColumn {
                     items(weatherList) { weather ->
-                        WeatherDataView(weather , viewModel, navController , cityQueries)
+                        ShowData(weather , viewModel, navController , cityQueries)
                         Spacer(modifier = Modifier.height(LocalSpacing.current.small))
                         Divider(color = Color.Gray)
                         Spacer(modifier = Modifier.height(LocalSpacing.current.small))
@@ -158,12 +153,11 @@ fun MainMenu(navController: NavController, viewModel: WeatherViewModel, cityQuer
                 ) {
                     Text(
                         text = error.toString(),
-                        color = ApiClient.getTextColor(),
+                        color = viewModel.getTextColor(),
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
             }
         }
     }
-
 }

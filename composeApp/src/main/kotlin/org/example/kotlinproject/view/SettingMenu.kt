@@ -78,7 +78,7 @@ fun ModeBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
 
 
 @Composable
-fun SettingScreen(navController: NavController) {
+fun SettingMenu(navController: NavController) {
     val settings = ApiClient.getSetting()
     var selectedTemperature by remember { mutableIntStateOf(settings.getInt("Temperature" , 0)) }
     var selectedWindSpeed by remember { mutableIntStateOf(settings.getInt("Wind" , 0)) }

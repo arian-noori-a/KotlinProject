@@ -1,8 +1,13 @@
 package org.example.kotlinproject.model
 
 
+import android.content.Context
 import androidx.compose.ui.graphics.Color
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.russhwolf.settings.Settings
+//import org.example.kotlinproject.db.CityQueries
+import org.example.kotlinproject.db.weatherdb
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -15,7 +20,6 @@ object ApiClient {
     private const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
     private val settings: Settings = Settings()
     lateinit var selectedCity : WeatherResponse
-
 
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -47,20 +51,6 @@ object ApiClient {
 
     fun getSetting(): Settings {
         return settings
-    }
-
-    fun getBackGroundColor(): Color {
-        return if(settings.getInt("Mode" , 0) == 0)
-            Color.White
-        else
-            Color.DarkGray
-    }
-
-    fun getTextColor(): Color {
-        return if(settings.getInt("Mode" , 0) == 0)
-            Color.Black
-        else
-            Color.White
     }
 
 }
