@@ -15,7 +15,6 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import org.example.kotlinproject.db.CityQueries
 import org.example.kotlinproject.db.weatherdb
-import org.example.kotlinproject.viewmodel.WeatherViewModel
 
 
 @Composable
@@ -37,8 +36,16 @@ fun WeatherApp(context: Context) {
     val database = weatherdb(driver)
     val cityQueries: CityQueries = database.cityQueries
 
-    // to clear the database you can use this line:
+    // clear the database:
     //cityQueries.clearDatabase()
+    // insert format:
+    //cityQueries.insertCity("London" , 2.3 , 2.4 , 2.4 , 2.4 , "Weather")
+
+
+    for (city in cityQueries.selectAllCities().executeAsList()) {
+        viewModel.cities.add(city.name)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -49,7 +56,7 @@ fun WeatherApp(context: Context) {
                 MainMenu(navController, viewModel, cityQueries)
             }
             composable("SettingMenu") {
-                SettingMenu(navController)
+                SettingMenu(navController , viewModel)
             }
             composable("WeatherMenu") {
                 SelectedWeatherMenu(navController , viewModel)

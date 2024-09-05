@@ -18,8 +18,6 @@ import androidx.navigation.NavController
 import org.example.kotlinproject.db.CityQueries
 import org.example.kotlinproject.model.ApiClient
 import org.example.kotlinproject.model.WeatherResponse
-import org.example.kotlinproject.ui.theme.LocalSpacing
-import org.example.kotlinproject.viewmodel.WeatherViewModel
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
@@ -92,8 +90,8 @@ fun ShowData(weather: WeatherResponse, viewModel: WeatherViewModel, navControlle
             modifier = Modifier
                 .fillMaxWidth()
                 .offset(x = offsetX)
-                .border(width = LocalSpacing.current.extraSmall, color = Color.Gray)
-                .padding(LocalSpacing.current.small)
+                .border(width = 4.dp, color = Color.Gray)
+                .padding(8.dp)
                 .pointerInput(Unit) {
                     detectHorizontalDragGestures(
                         onDragEnd = {

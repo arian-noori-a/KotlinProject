@@ -4,12 +4,13 @@ CREATE TABLE city (
      temperature REAL NOT NULL,
      pressure REAL NOT NULL,
      windSpeed REAL NOT NULL,
+     humidity REAL NOT NULL,
      weather TEXT NOT NULL
  );
 
 insertCity:
-INSERT INTO city(name, temperature, pressure, windSpeed, weather)
-VALUES (?, ?, ?, ?, ?);
+INSERT INTO city(name, temperature, pressure, windSpeed, humidity, weather)
+VALUES (?, ?, ?, ?, ? , ?);
 
 selectAllCities:
 SELECT * FROM city;

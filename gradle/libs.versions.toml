@@ -11,6 +11,7 @@ activityCompose = "1.9.1"
 composeBom = "2024.08.00"
 material = "1.6.8"
 multiplatformSettings = "1.1.1"
+multiplatformSettingsNoArg = "1.1.1"
 sqldelight = "2.0.2"
 retrofit = "2.9.0"
 navigation = "2.7.7"
@@ -37,6 +38,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 material = { module = "androidx.compose.material:material", version.ref = "material" }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }
+multiplatform-settings-no-arg = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatformSettingsNoArg" }
 sqldelight = { group = "app.cash.sqldelight" , version.ref = "sqldelight" , name = "android-driver"}
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }

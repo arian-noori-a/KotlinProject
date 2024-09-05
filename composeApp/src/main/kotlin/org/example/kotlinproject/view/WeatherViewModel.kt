@@ -1,4 +1,4 @@
-package org.example.kotlinproject.viewmodel
+package org.example.kotlinproject.view
 
 
 import androidx.compose.ui.graphics.Color
@@ -20,6 +20,8 @@ class WeatherViewModel : ViewModel() {
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
+    val cities: MutableList<String> = mutableListOf()
+    lateinit var cityQueries: CityQueries
 
 
     fun fetchWeather(cityName: String , cityQueries: CityQueries) {
@@ -36,6 +38,7 @@ class WeatherViewModel : ViewModel() {
                     newWeather.main.temp.toDouble(),
                     newWeather.main.pressure.toDouble(),
                     newWeather.wind.speed.toDouble(),
+                    newWeather.main.humidity.toDouble(),
                     newWeather.weather.toString())
 
 

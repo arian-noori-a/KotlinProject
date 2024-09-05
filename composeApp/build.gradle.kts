@@ -57,8 +57,7 @@ dependencies {
     implementation(libs.androidx.foundation.android)
     implementation(libs.multiplatform.settings)
     implementation(libs.androidx.datastore.preferences.core)
-    implementation("com.russhwolf:multiplatform-settings-no-arg:1.1.1")
-
+    implementation(libs.multiplatform.settings.no.arg)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     testImplementation(libs.junit)

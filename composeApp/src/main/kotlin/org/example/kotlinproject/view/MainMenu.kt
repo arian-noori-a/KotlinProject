@@ -25,9 +25,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.unit.dp
 import org.example.kotlinproject.db.CityQueries
-import org.example.kotlinproject.ui.theme.LocalSpacing
-import org.example.kotlinproject.viewmodel.WeatherViewModel
 
 
 @Composable
@@ -49,8 +48,8 @@ fun MainMenu(
     // when you open this menu, the cities which name was in the cityQueries,
     // would be used in the fetch weather function:
     LaunchedEffect(Unit) {
-        for (city in cityQueries.selectAllCities().executeAsList()) {
-            viewModel.fetchWeather(city.name , cityQueries)
+        for (city in viewModel.cities) {
+            viewModel.fetchWeather(city , cityQueries)
         }
     }
 
@@ -98,7 +97,7 @@ fun MainMenu(
                 .background(viewModel.getBackgroundColor())
                 .padding(paddingValues)
         ) {
-            Column(modifier = Modifier.padding(LocalSpacing.current.small)) {
+            Column(modifier = Modifier.padding(8.dp)) {
                 Text(
                     text = "Enter the city you want to see its information:",
                     color = viewModel.getTextColor(),
@@ -112,7 +111,7 @@ fun MainMenu(
                     modifier = Modifier.fillMaxWidth(0.95f)
                 )
 
-                Spacer(modifier = Modifier.height(LocalSpacing.current.small))
+                Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -128,16 +127,16 @@ fun MainMenu(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(LocalSpacing.current.small))
+                Spacer(modifier = Modifier.height(8.dp))
 
                 // the weathers would be shown in a lazy column base on the data
                 // in the weatherList of the view model:
                 LazyColumn {
                     items(weatherList) { weather ->
                         ShowData(weather , viewModel, navController , cityQueries)
-                        Spacer(modifier = Modifier.height(LocalSpacing.current.small))
+                        Spacer(modifier = Modifier.height(8.dp))
                         Divider(color = Color.Gray)
-                        Spacer(modifier = Modifier.height(LocalSpacing.current.small))
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
             }
@@ -152,7 +151,7 @@ fun MainMenu(
             ) {
                 Box(
                     modifier = Modifier
-                        .padding(LocalSpacing.current.small)
+                        .padding(8.dp)
                 ) {
                     Text(
                         text = error.toString(),

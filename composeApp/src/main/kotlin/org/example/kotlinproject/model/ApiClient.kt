@@ -21,6 +21,7 @@ object ApiClient {
     private val settings: Settings = Settings()
     lateinit var selectedCity : WeatherResponse
 
+
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
