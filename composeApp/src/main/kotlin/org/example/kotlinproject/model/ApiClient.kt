@@ -1,13 +1,6 @@
 package org.example.kotlinproject.model
 
 
-import android.content.Context
-import androidx.compose.ui.graphics.Color
-import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.android.AndroidSqliteDriver
-import com.russhwolf.settings.Settings
-//import org.example.kotlinproject.db.CityQueries
-import org.example.kotlinproject.db.weatherdb
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -16,24 +9,18 @@ import kotlin.jvm.java
 
 object ApiClient {
 
-    private const val KEY = "4e6b57fbb69ef616ce47bd9a4e88686f"
-    private const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
-    private val settings: Settings = Settings()
-    lateinit var selectedCity : WeatherResponse
-
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(Database.getBaseUrl())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
 
     suspend fun getCurrentWeather(
         cityName: String,
-        apiKey: String
     ): WeatherResponse {
         return retrofit.create(ApiService::class.java)
-            .getCurrentWeather(cityName, apiKey, "metric")
+            .getCurrentWeather(cityName, Database.getKey(), "metric")
     }
 
 
@@ -44,14 +31,6 @@ object ApiClient {
             @Query("appid") apiKey: String,
             @Query("units") units: String
         ): WeatherResponse
-    }
-
-    fun getKey(): String {
-        return KEY
-    }
-
-    fun getSetting(): Settings {
-        return settings
     }
 
 }

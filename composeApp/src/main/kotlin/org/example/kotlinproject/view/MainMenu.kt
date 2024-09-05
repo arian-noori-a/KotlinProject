@@ -27,13 +27,13 @@ import androidx.navigation.NavController
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.unit.dp
 import org.example.kotlinproject.db.CityQueries
+import org.example.kotlinproject.model.Database
 
 
 @Composable
 fun MainMenu(
     navController: NavController,
-    viewModel: WeatherViewModel,
-    cityQueries: CityQueries
+    viewModel: WeatherViewModel
 ) {
 
     val weatherList by viewModel.weatherList.collectAsState()
@@ -48,9 +48,7 @@ fun MainMenu(
     // when you open this menu, the cities which name was in the cityQueries,
     // would be used in the fetch weather function:
     LaunchedEffect(Unit) {
-        for (city in viewModel.cities) {
-            viewModel.fetchWeather(city , cityQueries)
-        }
+
     }
 
     LaunchedEffect(error) {
@@ -119,7 +117,7 @@ fun MainMenu(
                 ) {
                     Button(
                         onClick = {
-                            viewModel.fetchWeather(cityName , cityQueries)
+                            viewModel.fetchWeather(cityName)
                             cityName = ""
                         }
                     ) {
@@ -133,7 +131,7 @@ fun MainMenu(
                 // in the weatherList of the view model:
                 LazyColumn {
                     items(weatherList) { weather ->
-                        ShowData(weather , viewModel, navController , cityQueries)
+                        ShowData(weather , viewModel, navController)
                         Spacer(modifier = Modifier.height(8.dp))
                         Divider(color = Color.Gray)
                         Spacer(modifier = Modifier.height(8.dp))

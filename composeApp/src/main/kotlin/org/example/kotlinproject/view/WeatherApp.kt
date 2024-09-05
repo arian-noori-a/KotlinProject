@@ -15,36 +15,13 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import org.example.kotlinproject.db.CityQueries
 import org.example.kotlinproject.db.weatherdb
+import org.example.kotlinproject.model.Database
 
 
 @Composable
-fun WeatherApp(context: Context) {
+fun WeatherApp(context: Context , viewModel: WeatherViewModel) {
 
-    // to remember the state of the page navigation:
     val navController = rememberNavController()
-
-    // the main object which control the connection between
-    // the UI and the data:
-    val viewModel: WeatherViewModel = viewModel {
-        WeatherViewModel()
-    }
-
-    // the database which holds the information of the cities:
-    val driver: SqlDriver = AndroidSqliteDriver(
-        weatherdb.Schema, context, "weather.db"
-    )
-    val database = weatherdb(driver)
-    val cityQueries: CityQueries = database.cityQueries
-
-    // clear the database:
-    //cityQueries.clearDatabase()
-    // insert format:
-    //cityQueries.insertCity("London" , 2.3 , 2.4 , 2.4 , 2.4 , "Weather")
-
-
-    for (city in cityQueries.selectAllCities().executeAsList()) {
-        viewModel.cities.add(city.name)
-    }
 
     Box(
         modifier = Modifier
@@ -53,7 +30,7 @@ fun WeatherApp(context: Context) {
     ) {
         NavHost(navController = navController, startDestination = "MainMenu") {
             composable("MainMenu") {
-                MainMenu(navController, viewModel, cityQueries)
+                MainMenu(navController, viewModel)
             }
             composable("SettingMenu") {
                 SettingMenu(navController , viewModel)

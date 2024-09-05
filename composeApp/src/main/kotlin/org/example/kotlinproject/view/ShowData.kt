@@ -1,6 +1,7 @@
 package org.example.kotlinproject.view
 
 import android.annotation.SuppressLint
+import android.provider.ContactsContract.Data
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import org.example.kotlinproject.db.CityQueries
 import org.example.kotlinproject.model.ApiClient
+import org.example.kotlinproject.model.Database
 import org.example.kotlinproject.model.WeatherResponse
 import java.time.Instant
 import java.time.ZoneOffset
@@ -26,10 +28,10 @@ import kotlin.text.trimIndent
 
 
 @Composable
-fun ShowData(weather: WeatherResponse, viewModel: WeatherViewModel, navController: NavController, cityQueries: CityQueries) {
+fun ShowData(weather: WeatherResponse, viewModel: WeatherViewModel, navController: NavController) {
     var offsetX by remember { mutableStateOf(0.dp) }
     var dragAmount by remember { mutableFloatStateOf(0f) }
-    val settings = ApiClient.getSetting()
+    val settings = Database.getSettings()
     var temperature = ""
     when (settings.getInt("Temperature" , 0)) {
         0 -> temperature = "${"%.2f".format(weather.main.temp)}° C"
@@ -73,7 +75,7 @@ fun ShowData(weather: WeatherResponse, viewModel: WeatherViewModel, navControlle
         if (offsetX > dragThreshold) {
             Button(
                 onClick = {
-                    viewModel.removeWeather(weather.name , cityQueries)
+                    viewModel.removeWeather(weather.name)
                     navController.navigate("MainMenu")
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -116,7 +118,7 @@ fun ShowData(weather: WeatherResponse, viewModel: WeatherViewModel, navControlle
                 text = weatherInfo,
                 color = if(settings.getInt("Mode" , 0) == 0) Color.Black else Color.White ,
                 modifier = Modifier.clickable(onClick = {
-                    ApiClient.selectedCity = weather
+                    Database.selectedCity = weather
                     navController.navigate("WeatherMenu")
                 })
             )

@@ -2,12 +2,17 @@ package org.example.kotlinproject.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -18,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import org.example.kotlinproject.model.ApiClient
 import com.example.kotlinproject.R.drawable
+import org.example.kotlinproject.model.Database
 
 @Composable
 fun SelectedWeatherMenu(navController: NavController , viewModel: WeatherViewModel) {
@@ -38,7 +44,7 @@ fun SelectedWeatherMenu(navController: NavController , viewModel: WeatherViewMod
         )
 
         Text(
-            text = ApiClient.selectedCity.name,
+            text = Database.selectedCity.name,
             style = textStyle,
             modifier = Modifier.fillMaxWidth(),
             fontSize = 36.sp
@@ -46,7 +52,7 @@ fun SelectedWeatherMenu(navController: NavController , viewModel: WeatherViewMod
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        for (weather in ApiClient.selectedCity.weather) {
+        for (weather in Database.selectedCity.weather) {
             val description = weather.description
             val painter = getWeatherImage(description)
             MyImage(painter)
@@ -61,11 +67,11 @@ fun SelectedWeatherMenu(navController: NavController , viewModel: WeatherViewMod
         Spacer(modifier = Modifier.height(10.dp))
 
         Box(modifier = Modifier.background(viewModel.getBackgroundColor()).padding(5.dp)) {
-            val description = "Humidity" + ApiClient.selectedCity.main.humidity.toString() + "%"
+            val description = "Humidity" + Database.selectedCity.main.humidity.toString() + "%"
             Text(text = description , style = textStyle , modifier = Modifier.fillMaxWidth())
         }
-        val settings = ApiClient.getSetting()
-        val weather = ApiClient.selectedCity
+        val settings = Database.getSettings()
+        val weather = Database.selectedCity
         var windSpeed = "Wind Speed:"
         when (settings.getInt("Wind" , 0)) {
             0 -> windSpeed += "${weather.wind.speed} m/s"
@@ -99,14 +105,21 @@ fun SelectedWeatherMenu(navController: NavController , viewModel: WeatherViewMod
 
     }
 }
+
+
 @Composable
 fun MyImage(painter: Painter) {
     Image(
         painter = painter,
         contentDescription = "Weather Image",
-        modifier = Modifier.size(128.dp)
+        modifier = Modifier
+            .size(128.dp)
+            .clip(CircleShape)
+            .background(Color(0xFFADD8E6))
+            .border(2.dp, Color.Black, CircleShape)
     )
 }
+
 
 
 @Composable

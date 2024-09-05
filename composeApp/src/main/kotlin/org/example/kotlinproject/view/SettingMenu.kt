@@ -12,12 +12,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import org.example.kotlinproject.model.ApiClient
+import org.example.kotlinproject.model.Database
 
 
 @Composable
 fun SettingMenu(navController: NavController , viewModel: WeatherViewModel) {
     // the setting memory:
-    val settings = ApiClient.getSetting()
+    val settings = Database.getSettings()
 
     // the states of the menu:
     var selectedTemperature by remember {
