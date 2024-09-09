@@ -2,12 +2,16 @@ package org.example.kotlinproject.ui.stateholders
 
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontVariation
+import androidx.datastore.preferences.protobuf.Api
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.russhwolf.settings.Settings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.example.kotlinproject.data.repositories.WeatherRepository
+import org.example.kotlinproject.data.sources.ApiClient
+import org.example.kotlinproject.data.sources.Database
 import org.example.kotlinproject.data.sources.WeatherResponse
 
 
@@ -21,7 +25,7 @@ class WeatherViewModel : ViewModel() {
     val error: StateFlow<String?> = _error
 
 
-    val settings = WeatherRepository.settings
+    val settings = Settings()
 
     private val _temperatureUnit = MutableStateFlow(this.settings.getInt("Temperature" , 0))
     val temperatureUnit: StateFlow<Int> = _temperatureUnit
@@ -48,10 +52,10 @@ class WeatherViewModel : ViewModel() {
         viewModelScope.launch {
             _error.value = null
             try {
-                val newWeather = WeatherRepository.fetchWeather(cityName)
+                val newWeather = ApiClient.getCurrentWeather(cityName)
                 val updatedWeatherList = _weatherList.value.filter { it.name != newWeather.name }
                 _weatherList.value = listOf(newWeather) + updatedWeatherList
-                WeatherRepository.addWeather(newWeather)
+                Database.addWeather(newWeather)
             } catch (e: Exception) {
                 _error.value = "Error in fetching weather for $cityName: ${e.message}.\n" +
                         "Check your connection and your city name."
@@ -61,7 +65,7 @@ class WeatherViewModel : ViewModel() {
 
     fun removeWeather(cityName: String) {
         _weatherList.value = _weatherList.value.filter { it.name.lowercase() != cityName.lowercase() }
-        WeatherRepository.deleteWeather(cityName)
+        Database.getQueries().deleteCityByName(cityName)
     }
 
     fun getBackgroundColor(): Color {
@@ -79,9 +83,9 @@ class WeatherViewModel : ViewModel() {
     }
 
     fun selectCity(weatherResponse: WeatherResponse) {
-        WeatherRepository.setSelectedCity(weatherResponse)
+        Database.selectedCity = weatherResponse
     }
     fun getSelectedCity(): WeatherResponse {
-        return WeatherRepository.selectedCity
+        return Database.selectedCity
     }
 }

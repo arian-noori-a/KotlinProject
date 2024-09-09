@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import org.example.kotlinproject.data.sources.WeatherResponse
 import org.example.kotlinproject.ui.stateholders.WeatherViewModel
 import java.time.Instant
+import java.time.LocalTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -134,4 +135,17 @@ fun getLocalTime(dt: Long, timezoneOffset: Int): String {
     val instant = Instant.ofEpochSecond(dt)
     val zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneOffset.ofTotalSeconds(timezoneOffset))
     return zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+}
+fun isTimeAfterFive(dt: Long, timezoneOffset: Int): Boolean {
+    val timeString = getLocalTime(dt, timezoneOffset)
+    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+
+    // Parse the string to a LocalTime object
+    val localTime = LocalTime.parse(timeString, formatter)
+
+    // Create a LocalTime object for 17:00
+    val targetTime = LocalTime.of(17, 0)
+
+    // Compare if localTime is after 17:00
+    return localTime.isAfter(targetTime)
 }

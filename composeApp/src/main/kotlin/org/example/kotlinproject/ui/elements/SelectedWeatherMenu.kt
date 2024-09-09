@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.kotlinproject.R.drawable
 import org.example.kotlinproject.ui.stateholders.WeatherViewModel
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun SelectedWeatherMenu(
@@ -54,10 +56,19 @@ fun SelectedWeatherMenu(
 
         Spacer(modifier = Modifier.height(30.dp))
 
+        val timeString = getLocalTime(selectedCity.dt, selectedCity.timezone)
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        val localTime = LocalTime.parse(timeString, formatter)
+        val color: Color = if(localTime.isBefore(LocalTime.of(20 , 0)) and localTime.isAfter(LocalTime.of(6 , 0))) {
+            Color(0xFFADD8E6)
+        } else {
+            Color(0xFF00008B)
+        }
+
         for (weather in selectedCity.weather) {
             val description = weather.description
             val painter = getWeatherImage(description)
-            MyImage(painter)
+            MyImage(painter , color)
             Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = description,
@@ -109,14 +120,14 @@ fun SelectedWeatherMenu(
 
 
 @Composable
-fun MyImage(painter: Painter) {
+fun MyImage(painter: Painter , color: Color) {
     Image(
         painter = painter,
         contentDescription = "Weather Image",
         modifier = Modifier
             .size(128.dp)
             .clip(CircleShape)
-            .background(Color(0xFFADD8E6))
+            .background(color)
             .border(2.dp, Color.Black, CircleShape)
     )
 }
