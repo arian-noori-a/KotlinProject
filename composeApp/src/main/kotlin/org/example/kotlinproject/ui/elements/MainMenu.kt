@@ -73,7 +73,11 @@ fun MainMenu(
                     }
                 )
                 BottomNavigationItem(
-                    icon = { Icon(Icons.Filled.Settings, contentDescription = "Settings") },
+                    icon = {
+                        Icon(
+                        Icons.Filled.Settings,
+                        contentDescription = "Settings"
+                    )},
                     label = { Text("Settings") },
                     selected = false,
                     onClick = {

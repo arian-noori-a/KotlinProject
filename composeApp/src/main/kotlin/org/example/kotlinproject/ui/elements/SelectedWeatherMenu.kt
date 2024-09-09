@@ -24,7 +24,10 @@ import com.example.kotlinproject.R.drawable
 import org.example.kotlinproject.ui.stateholders.WeatherViewModel
 
 @Composable
-fun SelectedWeatherMenu(navController: NavController , viewModel: WeatherViewModel) {
+fun SelectedWeatherMenu(
+    navController: NavController ,
+    viewModel: WeatherViewModel
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()

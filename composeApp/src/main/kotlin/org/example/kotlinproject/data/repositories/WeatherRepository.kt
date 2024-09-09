@@ -5,22 +5,23 @@ import org.example.kotlinproject.data.sources.Database
 import org.example.kotlinproject.data.sources.WeatherResponse
 
 object WeatherRepository {
+    val settings = Database.getSettings()
+    val selectedCity = Database.selectedCity
+
     suspend fun fetchWeather(cityName: String): WeatherResponse {
         return ApiClient.getCurrentWeather(cityName)
     }
 
-//    suspend fun getSavedWeather(): List<WeatherResponse> {
-//
-//    }
-
-    suspend fun addWeather(weather: WeatherResponse) {
+    fun addWeather(weather: WeatherResponse) {
         Database.addWeather(weather)
     }
 
-    suspend fun deleteWeather(cityName: String) {
-
+    fun deleteWeather(cityName: String) {
+        val cityQueries = Database.getQueries()
+        cityQueries.deleteCityByName(cityName)
     }
 
-    val settings = Database.getSettings()
-
+    fun setSelectedCity(city: WeatherResponse) {
+        Database.selectedCity = city
+    }
 }

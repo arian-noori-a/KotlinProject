@@ -1,5 +1,6 @@
 package org.example.kotlinproject.ui.elements
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -66,38 +67,42 @@ fun SettingMenu(navController: NavController , viewModel: WeatherViewModel) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                ModeBar (
+                BarCreator (
                     selectedTab = mode,
                     onTabSelected = { index ->
-                        viewModel.updateMode(index)
-                    }
+                        viewModel.updateSettings(index , "Mode")
+                    },
+                    tabs = listOf("Light Mode" , "Dark Mode")
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                TemperatureBar(
+                BarCreator(
                     selectedTab = temperatureUnit,
                     onTabSelected = { index ->
-                        viewModel.updateTemperatureUnit(index)
-                    }
+                        viewModel.updateSettings(index , "Temperature")
+                    },
+                    tabs = listOf("Celsius", "Fahrenheit", "Kelvin")
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                WindSpeedBar(
+                BarCreator(
                     selectedTab = windSpeedUnit,
                     onTabSelected = { index ->
-                        viewModel.updateWindSpeedUnit(index)
-                    }
+                        viewModel.updateSettings(index , "Wind")
+                    },
+                    tabs = listOf("m/s", "km/h", "Knots")
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                PressureBar(
+                BarCreator(
                     selectedTab = pressureUnit,
                     onTabSelected = { index ->
-                        viewModel.updatePressureUnit(index)
-                    }
+                        viewModel.updateSettings(index , "Pressure")
+                    },
+                    tabs = listOf("hPa", "In Hg", "kPa" , "mmHg")
                 )
             }
         }
@@ -106,59 +111,7 @@ fun SettingMenu(navController: NavController , viewModel: WeatherViewModel) {
 
 
 @Composable
-fun TemperatureBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
-    val tabs = listOf("Celsius", "Fahrenheit", "Kelvin")
-
-    TabRow(selectedTabIndex = selectedTab) {
-        tabs.forEachIndexed { index, title ->
-            Tab(
-                text = { Text(text = title,
-                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
-                selected = index == selectedTab,
-                onClick = { onTabSelected(index) }
-            )
-        }
-    }
-}
-
-
-@Composable
-fun WindSpeedBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
-    val tabs = listOf("m/s", "km/h", "Knots")
-
-    TabRow(selectedTabIndex = selectedTab) {
-        tabs.forEachIndexed { index, title ->
-            Tab(
-                text = { Text(text = title,
-                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
-                selected = index == selectedTab,
-                onClick = { onTabSelected(index) }
-            )
-        }
-    }
-}
-
-
-@Composable
-fun PressureBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
-    val tabs = listOf("hPa", "In Hg", "kPa" , "mmHg")
-
-    TabRow(selectedTabIndex = selectedTab) {
-        tabs.forEachIndexed { index, title ->
-            Tab(
-                text = { Text(text = title,
-                    fontWeight = if(selectedTab == index) FontWeight.ExtraBold else FontWeight.Light) },
-                selected = index == selectedTab,
-                onClick = { onTabSelected(index) }
-            )
-        }
-    }
-}
-
-@Composable
-fun ModeBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
-    val tabs = listOf("Light Mode", "Night Mode")
-
+fun BarCreator(selectedTab: Int, onTabSelected: (Int) -> Unit, tabs: List<String>) {
     TabRow(selectedTabIndex = selectedTab) {
         tabs.forEachIndexed { index, title ->
             Tab(

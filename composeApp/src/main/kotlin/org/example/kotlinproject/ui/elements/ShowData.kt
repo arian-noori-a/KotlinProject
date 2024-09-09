@@ -25,7 +25,11 @@ import kotlin.text.trimIndent
 
 
 @Composable
-fun ShowData(weather: WeatherResponse, viewModel: WeatherViewModel, navController: NavController) {
+fun ShowData(
+    weather: WeatherResponse,
+    viewModel: WeatherViewModel,
+    navController: NavController
+) {
     var offsetX by remember { mutableStateOf(0.dp) }
     var dragAmount by remember { mutableFloatStateOf(0f) }
     val settings = viewModel.settings
@@ -105,7 +109,7 @@ fun ShowData(weather: WeatherResponse, viewModel: WeatherViewModel, navControlle
                             if (offsetX > 80.dp)
                                 offsetX = 81.dp
                         }
-                    ) { _, dragAmountDelta ->
+                    ) { _ , dragAmountDelta ->
                         dragAmount += dragAmountDelta
                         offsetX = (offsetX + dragAmountDelta.toDp()).coerceAtLeast(0.dp)
                     }
