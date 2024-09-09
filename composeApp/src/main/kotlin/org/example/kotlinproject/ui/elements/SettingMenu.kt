@@ -1,4 +1,4 @@
-package org.example.kotlinproject.view
+package org.example.kotlinproject.ui.elements
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,28 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import org.example.kotlinproject.model.ApiClient
-import org.example.kotlinproject.model.Database
+import org.example.kotlinproject.ui.stateholders.WeatherViewModel
 
 
 @Composable
 fun SettingMenu(navController: NavController , viewModel: WeatherViewModel) {
-    // the setting memory:
-    val settings = Database.getSettings()
 
-    // the states of the menu:
-    var selectedTemperature by remember {
-        mutableIntStateOf(settings.getInt("Temperature" , 0))
-    }
-    var selectedWindSpeed by remember {
-        mutableIntStateOf(settings.getInt("Wind" , 0))
-    }
-    var selectedPressure by remember {
-        mutableIntStateOf(settings.getInt("Pressure" , 0))
-    }
-    var selectedMode by remember {
-        mutableIntStateOf(settings.getInt("Mode" , 0))
-    }
+    val temperatureUnit by viewModel.temperatureUnit.collectAsState()
+    val windSpeedUnit by viewModel.windSpeedUnit.collectAsState()
+    val pressureUnit by viewModel.pressureUnit.collectAsState()
+    val mode by viewModel.mode.collectAsState()
 
     Scaffold(
         bottomBar = {
@@ -79,40 +67,36 @@ fun SettingMenu(navController: NavController , viewModel: WeatherViewModel) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 ModeBar (
-                    selectedTab = selectedMode,
+                    selectedTab = mode,
                     onTabSelected = { index ->
-                        settings.putInt("Mode" , index)
-                        selectedMode = index
+                        viewModel.updateMode(index)
                     }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                TemperatureTabBar(
-                    selectedTab = selectedTemperature,
+                TemperatureBar(
+                    selectedTab = temperatureUnit,
                     onTabSelected = { index ->
-                        settings.putInt("Temperature" , index)
-                        selectedTemperature = index
+                        viewModel.updateTemperatureUnit(index)
                     }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 WindSpeedBar(
-                    selectedTab = selectedWindSpeed,
+                    selectedTab = windSpeedUnit,
                     onTabSelected = { index ->
-                        settings.putInt("Wind" , index)
-                        selectedWindSpeed = index
+                        viewModel.updateWindSpeedUnit(index)
                     }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 PressureBar(
-                    selectedTab = selectedPressure,
+                    selectedTab = pressureUnit,
                     onTabSelected = { index ->
-                        settings.putInt("Pressure" , index)
-                        selectedPressure = index
+                        viewModel.updatePressureUnit(index)
                     }
                 )
             }
@@ -120,9 +104,9 @@ fun SettingMenu(navController: NavController , viewModel: WeatherViewModel) {
     }
 }
 
-// Temperature Bar:
+
 @Composable
-fun TemperatureTabBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
+fun TemperatureBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     val tabs = listOf("Celsius", "Fahrenheit", "Kelvin")
 
     TabRow(selectedTabIndex = selectedTab) {
@@ -137,7 +121,7 @@ fun TemperatureTabBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     }
 }
 
-// Wind Speed Bar:
+
 @Composable
 fun WindSpeedBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     val tabs = listOf("m/s", "km/h", "Knots")
@@ -154,7 +138,7 @@ fun WindSpeedBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     }
 }
 
-// Pressure Bar:
+
 @Composable
 fun PressureBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     val tabs = listOf("hPa", "In Hg", "kPa" , "mmHg")
@@ -171,7 +155,6 @@ fun PressureBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     }
 }
 
-// Mode Bar:
 @Composable
 fun ModeBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
     val tabs = listOf("Light Mode", "Night Mode")
@@ -187,4 +170,3 @@ fun ModeBar(selectedTab: Int, onTabSelected: (Int) -> Unit) {
         }
     }
 }
-

@@ -1,4 +1,4 @@
-package org.example.kotlinproject.model
+package org.example.kotlinproject.data.sources
 
 
 import retrofit2.Retrofit
@@ -9,12 +9,10 @@ import kotlin.jvm.java
 
 object ApiClient {
 
-
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(Database.getBaseUrl())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-
 
     suspend fun getCurrentWeather(
         cityName: String,
@@ -22,7 +20,6 @@ object ApiClient {
         return retrofit.create(ApiService::class.java)
             .getCurrentWeather(cityName, Database.getKey(), "metric")
     }
-
 
     private interface ApiService {
         @GET("weather")

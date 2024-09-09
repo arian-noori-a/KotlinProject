@@ -1,7 +1,6 @@
-package org.example.kotlinproject.view
+package org.example.kotlinproject.ui.elements
 
 import android.annotation.SuppressLint
-import android.provider.ContactsContract.Data
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
@@ -16,10 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import org.example.kotlinproject.db.CityQueries
-import org.example.kotlinproject.model.ApiClient
-import org.example.kotlinproject.model.Database
-import org.example.kotlinproject.model.WeatherResponse
+import org.example.kotlinproject.data.sources.WeatherResponse
+import org.example.kotlinproject.ui.stateholders.WeatherViewModel
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
@@ -31,7 +28,7 @@ import kotlin.text.trimIndent
 fun ShowData(weather: WeatherResponse, viewModel: WeatherViewModel, navController: NavController) {
     var offsetX by remember { mutableStateOf(0.dp) }
     var dragAmount by remember { mutableFloatStateOf(0f) }
-    val settings = Database.getSettings()
+    val settings = viewModel.settings
     var temperature = ""
     when (settings.getInt("Temperature" , 0)) {
         0 -> temperature = "${"%.2f".format(weather.main.temp)}° C"
@@ -118,7 +115,7 @@ fun ShowData(weather: WeatherResponse, viewModel: WeatherViewModel, navControlle
                 text = weatherInfo,
                 color = if(settings.getInt("Mode" , 0) == 0) Color.Black else Color.White ,
                 modifier = Modifier.clickable(onClick = {
-                    Database.selectedCity = weather
+                    viewModel.selectCity(weather)
                     navController.navigate("WeatherMenu")
                 })
             )

@@ -1,4 +1,4 @@
-package org.example.kotlinproject.model
+package org.example.kotlinproject.data.sources
 
 
 

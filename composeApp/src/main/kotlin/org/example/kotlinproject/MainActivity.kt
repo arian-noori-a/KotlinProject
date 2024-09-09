@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.example.kotlinproject.model.Database
-import org.example.kotlinproject.view.WeatherApp
-import org.example.kotlinproject.view.WeatherViewModel
+import org.example.kotlinproject.data.sources.Database
+import org.example.kotlinproject.ui.elements.WeatherApp
+import org.example.kotlinproject.ui.stateholders.WeatherViewModel
 
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             }
 
             Database.run(this , viewModel)
-            WeatherApp(this , viewModel)
+            WeatherApp(viewModel)
 
         }
     }
